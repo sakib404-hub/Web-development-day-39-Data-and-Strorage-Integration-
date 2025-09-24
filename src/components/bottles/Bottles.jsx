@@ -1,7 +1,7 @@
 import React, { use, useEffect } from 'react';
 import { useState } from 'react';
 import Bottle from './Bottle';
-import { getStored, addToStored } from '../../utilities/localStorage';
+import { getStored, addToStored, removeFromStored } from '../../utilities/localStorage';
 import './bottles.css'
 import Cart from './Cart';
 
@@ -19,7 +19,7 @@ const Bottles = ({ bottlePromise }) => {
         addToStored(bottle.id);
     }
 
-    //? We must always use the useEffect library outside of the function
+    //? We must always use the useEaffect librry outside of the function
     useEffect(() => {
         const storedCartIds = getStored();
         const storedCart = [];
@@ -29,8 +29,10 @@ const Bottles = ({ bottlePromise }) => {
         for (let id of storedCartIds) {
             // console.log(id);
 
-            const cartBottle = bottles.find((bottle) => bottle.id = id);
-            cartBottle ? storedCart.push(cartBottle) : null;
+            const cartBottle = bottles.find((bottle) => bottle.id === id);
+            if (cartBottle) {
+                storedCart.push(cartBottle);
+            }
         }
         setCart(storedCart);
 
@@ -40,6 +42,7 @@ const Bottles = ({ bottlePromise }) => {
         console.log('Button is clicked', id);
         const remainCart = cart.filter((bottle) => bottle.id !== id);
         setCart(remainCart);
+        removeFromStored(id);
     }
 
     return (
