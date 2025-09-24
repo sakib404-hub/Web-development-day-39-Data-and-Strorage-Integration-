@@ -12,7 +12,9 @@ function App() {
   const bottlePromise = bottles();
   return (
     <>
-      <h1>Buy Awesome Water Bottles</h1>
+      <h1 style={{
+        textAlign: 'center'
+      }}>Buy Awesome Water Bottles</h1>
       <Suspense fallback={<p>Bottles Are Loading</p>}>
         <Bottles bottlePromise={bottlePromise}></Bottles>
       </Suspense>
