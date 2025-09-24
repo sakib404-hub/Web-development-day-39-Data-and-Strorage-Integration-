@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Bottle from './Bottle';
 import { getStored, addToStored } from '../../utilities/localStorage';
 import './bottles.css'
+import Cart from './Cart';
 
 const Bottles = ({ bottlePromise }) => {
     const bottles = use(bottlePromise);
@@ -26,7 +27,7 @@ const Bottles = ({ bottlePromise }) => {
 
         //? Lopping
         for (let id of storedCartIds) {
-            console.log(id);
+            // console.log(id);
 
             const cartBottle = bottles.find((bottle) => bottle.id = id);
             cartBottle ? storedCart.push(cartBottle) : null;
@@ -34,6 +35,12 @@ const Bottles = ({ bottlePromise }) => {
         setCart(storedCart);
 
     }, [bottles]);
+
+    const handleRemove = (id) => {
+        console.log('Button is clicked', id);
+        const remainCart = cart.filter((bottle) => bottle.id !== id);
+        setCart(remainCart);
+    }
 
     return (
         <div>
@@ -43,6 +50,7 @@ const Bottles = ({ bottlePromise }) => {
                 <strong>Bottle: </strong>
                 {bottles.length}
             </p>
+            <Cart cart={cart} handleRemove={handleRemove}></Cart>
             <p style={{
                 textAlign: 'center'
             }}>
